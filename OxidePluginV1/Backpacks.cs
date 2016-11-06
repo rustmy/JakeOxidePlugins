@@ -24,7 +24,7 @@ namespace Oxide.Plugins
             foreach(BasePlayer player in BasePlayer.activePlayerList)
             {
                 player.SendConsoleCommand("bind tab inventory.toggle;backpackInvButton");
-                Puts(player.inventory.containerWear.canAcceptItem.Method.Name.ToString());
+                Puts(player.inventory.containerWear.onlyAllowedItem.name);
             }
         }
 
@@ -138,7 +138,7 @@ namespace Oxide.Plugins
         {
             //string prefab = "assets/prefabs/deployable/woodenbox/woodbox_deployed.prefab";
             string prefab = "assets/prefabs/deployable/small stash/small_stash_deployed.prefab";
-            StorageContainer entity = (StorageContainer)GameManager.server.CreateEntity(prefab);
+            StorageContainer entity = (StorageContainer)GameManager.server.CreateEntity(prefab, new Vector3(0,10000,0));
             if (entity != null)
             {
                 backpackNetworking.Add(entity, player);
@@ -151,12 +151,12 @@ namespace Oxide.Plugins
                     }
                 }
                 entity.Spawn();
-                entity.SetParent(player, "spine1");
+                /*entity.SetParent(player, "spine1");
                 if (MyBackpackComponent.positionSettings.ContainsKey(prefab))
                 {
                     entity.transform.position = MyBackpackComponent.positionSettings[prefab].offset;
                     entity.transform.rotation = Quaternion.Euler(MyBackpackComponent.positionSettings[prefab].rotation);
-                }
+                }*/
 
                 var colliders = entity.GetComponents<Collider>();
                 foreach (Collider collider in colliders)
